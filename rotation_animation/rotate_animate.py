@@ -28,7 +28,6 @@ class Asteroid(pg.sprite.Sprite):
         self.image = self.frames[self.frame]
         self.rect = self.image.get_rect(center=location)
         self.animate_fps = frame_speed
-        self.timer = 0.0
         self.angle = 0.0
         self.angular_speed = angular_speed #Degrees per second.
 
@@ -63,7 +62,7 @@ class Asteroid(pg.sprite.Sprite):
         return image
 
     def update(self,dt):
-        """Change the angle and fps based on time delay."""
+        """Change the angle and fps based on a time delta."""
         self.angle = (self.angle+self.angular_speed*dt)%360
         self.frame = (self.frame+self.animate_fps*dt)%len(self.frames)
         self.image = self.get_image(False)
@@ -125,6 +124,7 @@ def main():
     global ASTEROID
     pg.init()
     os.environ["SDL_VIDEO_CENTERED"] = "TRUE"
+    pg.display.set_caption(CAPTION)
     pg.display.set_mode(SCREEN_SIZE)
     ASTEROID = pg.image.load("asteroid_simple.png").convert_alpha()
     Control().main_loop()
